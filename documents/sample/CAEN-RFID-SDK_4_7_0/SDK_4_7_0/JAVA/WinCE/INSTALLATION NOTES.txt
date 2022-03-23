@@ -1,0 +1,63 @@
+
+CAEN RFID Library for Java ME CDC (1.3.x compliant).
+
+ -------------------
+|INSTALLATION NOTES.|
+ -------------------
+
+
+1)Description
+-------------
+-------------
+
+
+The CAEN RFID Library for java ME CDC profile has been tested on CrEme JVM 4.12, with its 
+native javax.comm implementation on an ARMv4 and Windows CE 5.0.
+However, any other javax.comm WinCE native implementation should be compatible with CAEN 
+RFID Java ME library.
+
+
+2)Requirements
+-------------
+-------------
+
+
+  -  Microsoft Windows CE 5.0
+  -  Microsoft CE .NET Runtime 3.5
+  -  NSIComm CrEme JVM 4.12
+  -  NSICom CrEme javax.comm package for CrEme V. 4.12
+  -  NSICom CrEme javax.swing package for CrEme V. 4.12
+  -  PSION TekLogix RFIDDriverManager V. 1.2 +
+  -  PSION RFID Java Driver v 1.3
+
+
+3) INSTALLATION
+--------------------------
+--------------------------
+
+In this note we assume your installation drive is C:\ and the installation folder are default path, 
+during installation processes.
+
+
+3a) WAP installation
+--------------------
+
+In order to use CrEme JVM and any java application that work with the RFID module you must
+install on WAP, in this order, the following packages:
+ 
+ * CE .NET 3.5 runtime;
+ * PSION RFIDDriverManager 1.3;
+ * NSICom CrEme JVM V 4.12;
+ * NSICom CrEme javax.swing package;
+ * NSICom CrEme javax.comm package (Serial Communication package,fully implemented by NSICom);
+ * Copy RFIDDriver.jar in \Windows\CrEme\lib folder.
+ * Copy RFIDDriverJNI.dll in \Windows\CrEme\bin folder.
+
+After that, install appropriate driver using RFIDDriverManager.
+Now your WAP is ready to communicate with the RFID module through java application.
+
+
+
+
+
+
