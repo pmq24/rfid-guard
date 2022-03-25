@@ -1,0 +1,24 @@
+
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+application {
+    mainClass = 'com.github.pmq24.rfid_guard.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
