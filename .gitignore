@@ -1,4 +1,7 @@
 
+# Java
+/app/build/
+
 # JetBrains IntelliJ IDEA
 /.idea/
 *.iml
