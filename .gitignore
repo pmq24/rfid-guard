@@ -1,7 +1,11 @@
 
+# Java
+/app/build/
+
 # JetBrains IntelliJ IDEA
 /.idea/
 *.iml
 
 # Gradle
 /.gradle/
+local.properties
