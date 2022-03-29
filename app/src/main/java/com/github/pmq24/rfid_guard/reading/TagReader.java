@@ -3,26 +3,26 @@ package com.github.pmq24.rfid_guard.reading;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TagReadManager {
+public abstract class TagReader {
 
-    public TagReadManager() {
-        tagReadListeners = new LinkedList<>();
-    }
+    public abstract void start();
+
+    public abstract void stop();
 
     public void addTagReadListener(TagReadListener listener) {
         tagReadListeners.add(listener);
     }
 
-    public void removeTagReadListener(TagReadListener listener) {
-        tagReadListeners.remove(listener);
+    protected TagReader() {
+        tagReadListeners = new LinkedList<>();
     }
 
-    private void notifyListeners(TagReadDto read) {
+    protected void notifyListeners(TagReadDto read) {
         for (TagReadListener listener : tagReadListeners) {
            listener.onRead(read);
         }
     }
 
-    private final List<TagReadListener> tagReadListeners;
+    protected final List<TagReadListener> tagReadListeners;
 
 }
