@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 public class TagReadEntity {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

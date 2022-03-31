@@ -16,6 +16,11 @@ public class TagReadDto {
         this.rfid = rfid;
         this.time = LocalDateTime.now();
     }
+    
+    public TagReadDto(TagReadDto trd){
+        this.rfid = trd.getRfid();
+        this.time = trd.getTime();
+    }
 
     private String rfid;
     private LocalDateTime time;
