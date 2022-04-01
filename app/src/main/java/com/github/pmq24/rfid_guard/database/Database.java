@@ -1,21 +1,21 @@
 package com.github.pmq24.rfid_guard.database;
 
-import com.github.pmq24.rfid_guard.database.repos.TagReadRepo;
+import com.github.pmq24.rfid_guard.database.tables.TagReadTable;
 import lombok.Getter;
 
 public class Database {
 
     public Database() {
-        hibernate = new Hibernate();
-        tagReadRepo = new TagReadRepo(hibernate);
+        hibernateManager = new HibernateManager();
+        tagReadTable = new TagReadTable(hibernateManager);
     }
 
     public void destroy() {
-        hibernate.shutDown();
+        hibernateManager.shutDown();
     }
 
-    private final Hibernate hibernate;
+    private final HibernateManager hibernateManager;
 
-    @Getter private final TagReadRepo tagReadRepo;
+    @Getter private final TagReadTable tagReadTable;
 
 }

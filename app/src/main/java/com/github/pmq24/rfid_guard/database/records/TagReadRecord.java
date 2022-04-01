@@ -1,4 +1,4 @@
-package com.github.pmq24.rfid_guard.database.entities;
+package com.github.pmq24.rfid_guard.database.records;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class TagReadEntity {
+public class TagReadRecord {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

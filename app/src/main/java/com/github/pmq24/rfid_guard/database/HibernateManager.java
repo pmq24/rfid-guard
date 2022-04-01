@@ -7,9 +7,9 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class Hibernate {
+public class HibernateManager {
 
-    public Hibernate() {
+    public HibernateManager() {
         registry = new StandardServiceRegistryBuilder()
                 .configure()
                 .build();
