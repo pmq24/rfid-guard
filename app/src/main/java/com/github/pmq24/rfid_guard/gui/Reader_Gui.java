@@ -5,10 +5,9 @@
 package com.github.pmq24.rfid_guard.gui;
 
 import com.github.pmq24.rfid_guard.database.Database;
-import com.github.pmq24.rfid_guard.database.entities.TagReadEntity;
+import com.github.pmq24.rfid_guard.database.tag_reads.TagReadRecord;
 import com.github.pmq24.rfid_guard.reading.MockedTagReader;
 import com.github.pmq24.rfid_guard.reading.TagReadDto;
-import com.github.pmq24.rfid_guard.BUS.TagReadBus;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,9 +23,14 @@ public class Reader_Gui extends javax.swing.JFrame {
      * Creates new form Reader_Gui
      */
     
-    public Reader_Gui() throws Exception {
+    public Reader_Gui() {
         initComponents();
-        readDatabase();
+        
+    }
+    
+    public void insert(TagReadRecord record){
+        DefaultTableModel model = (DefaultTableModel) tblTagReader.getModel();
+        model.addRow(new Object[]{record.getRfid(), record.getTime()});
     }
     
     DefaultTableModel model = new DefaultTableModel();
@@ -39,27 +43,27 @@ public class Reader_Gui extends javax.swing.JFrame {
         return header;
     }
 
-    public void readDatabase() throws Exception{
-        Database db = new Database();
-        db.getTagReadRepo().readAll();
-        String[] columnNames = {"RFID", "Time", "Status"};
-        Vector header = createHeader(columnNames);
-        
-        if (model.getRowCount() == 0){
-            model = new DefaultTableModel(header,0);
-        }
-        
-        for (TagReadDto trd : TagReadBus.getdb()){
-            
-            Vector row = new Vector();
-            row.add(trd.getRfid());
-            row.add(trd.getTime());
-            
-            model.addRow(row);
-        }
-        
-        tblTagReader.setModel(model);
-    }
+//    public void readDatabase() throws Exception{
+//        Database db = new Database();
+//        db.getTagReadRepo().readAll();
+//        String[] columnNames = {"RFID", "Time", "Status"};
+//        Vector header = createHeader(columnNames);
+//        
+//        if (model.getRowCount() == 0){
+//            model = new DefaultTableModel(header,0);
+//        }
+//        
+//        for (TagReadDto trd : TagReadBus.getdb()){
+//            
+//            Vector row = new Vector();
+//            row.add(trd.getRfid());
+//            row.add(trd.getTime());
+//            
+//            model.addRow(row);
+//        }
+//        
+//        tblTagReader.setModel(model);
+//    }
     
     
     /**
@@ -90,13 +94,10 @@ public class Reader_Gui extends javax.swing.JFrame {
 
         tblTagReader.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "RFID", "TIME", "NOTES"
             }
         ));
         jScrollPane2.setViewportView(tblTagReader);
