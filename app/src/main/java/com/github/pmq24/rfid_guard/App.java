@@ -7,6 +7,9 @@ import com.github.pmq24.rfid_guard.reading.MockedTagReader;
 import com.github.pmq24.rfid_guard.reading.TagReader;
 import com.github.pmq24.rfid_guard.gui.Reader_Gui;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 public class App {
 
     public static void main(String[] args) {
@@ -36,13 +39,43 @@ public class App {
 
         reader.start();
 
-        final int TEN_SECONDS = 20000;
-        try {
-            Thread.sleep(TEN_SECONDS);
-        } catch (InterruptedException ignored) {}
+        gui.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
 
-        reader.stop();
-        db.getTagReadTable().selectAll().forEach(record -> System.out.println(record.toString()));
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                reader.stop();
+                db.getTagReadTable().selectAll().forEach(record -> System.out.println(record.toString()));
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
         
     }
 }

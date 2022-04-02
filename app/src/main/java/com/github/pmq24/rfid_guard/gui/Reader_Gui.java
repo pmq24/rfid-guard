@@ -4,14 +4,13 @@
  */
 package com.github.pmq24.rfid_guard.gui;
 
-import com.github.pmq24.rfid_guard.database.Database;
 import com.github.pmq24.rfid_guard.database.tag_reads.TagReadRecord;
-import com.github.pmq24.rfid_guard.reading.MockedTagReader;
-import com.github.pmq24.rfid_guard.reading.TagReadDto;
+
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,8 +28,10 @@ public class Reader_Gui extends javax.swing.JFrame {
     }
     
     public void insert(TagReadRecord record){
-        DefaultTableModel model = (DefaultTableModel) tblTagReader.getModel();
-        model.addRow(new Object[]{record.getRfid(), record.getTime()});
+        EventQueue.invokeLater(() -> {
+            DefaultTableModel model = (DefaultTableModel) tblTagReader.getModel();
+            model.insertRow(0, new Object[] {record.getRfid(), record.getTime()});
+        });
     }
     
     DefaultTableModel model = new DefaultTableModel();
