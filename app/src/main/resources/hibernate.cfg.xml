@@ -1,11 +1,12 @@
-<!DOCTYPE hibernateManager-configuration PUBLIC
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernateManager.org/dtd/hibernateManager-configuration-3.0.dtd">
-<hibernateManager-configuration>
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
   <session-factory>
     <property name="connection.driver_class">org.h2.Driver</property>
     <property name="connection.url">jdbc:h2:mem:test</property>
-    <property name="dialect">org.hibernateManager.dialect.H2Dialect</property>
+    <property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
     <property name="connection.username">sa</property>
     <property name="connection.password"/>
@@ -17,14 +18,14 @@
     <property name="current_session_context_class">thread</property>
     <property name="hbm2ddl.auto">create-drop</property>
 
-    <property name="hibernateManager.dbcp.initialSize">5</property>
-    <property name="hibernateManager.dbcp.maxTotal">20</property>
-    <property name="hibernateManager.dbcp.maxIdle">10</property>
-    <property name="hibernateManager.dbcp.minIdle">5</property>
-    <property name="hibernateManager.dbcp.maxWaitMillis">-1</property>
+    <property name="hibernate.dbcp.initialSize">5</property>
+    <property name="hibernate.dbcp.maxTotal">20</property>
+    <property name="hibernate.dbcp.maxIdle">10</property>
+    <property name="hibernate.dbcp.minIdle">5</property>
+    <property name="hibernate.dbcp.maxWaitMillis">-1</property>
 
 
-    <mapping class="com.github.pmq24.rfid_guard.database.records.TagReadRecord" />
+    <mapping class="com.github.pmq24.rfid_guard.database.tag_reads.TagReadRecord" />
 
   </session-factory>
-</hibernateManager-configuration>
+</hibernate-configuration>

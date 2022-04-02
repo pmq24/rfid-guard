@@ -1,6 +1,6 @@
 package com.github.pmq24.rfid_guard.database;
 
-import com.github.pmq24.rfid_guard.database.tables.TagReadTable;
+import com.github.pmq24.rfid_guard.database.tag_reads.TagReadTable;
 import lombok.Getter;
 
 public class Database {
@@ -15,7 +15,7 @@ public class Database {
     }
 
     private final HibernateManager hibernateManager;
-
     @Getter private final TagReadTable tagReadTable;
+
 
 }

@@ -1,6 +1,7 @@
 package com.github.pmq24.rfid_guard.database;
 
 import lombok.Getter;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -20,6 +21,10 @@ public class HibernateManager {
         sessionFactory = metadata.getSessionFactoryBuilder().build();
     }
 
+    public Session openSession() {
+        return sessionFactory.openSession();
+    }
+
     public void shutDown() {
         if (registry != null) {
             StandardServiceRegistryBuilder.destroy(registry);
@@ -27,6 +32,6 @@ public class HibernateManager {
     }
 
     @Getter private final StandardServiceRegistry registry;
-    @Getter private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
 }
