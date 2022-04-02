@@ -26,6 +26,8 @@
 
 
     <mapping class="com.github.pmq24.rfid_guard.database.tag_reads.TagReadRecord" />
+    <mapping class="com.github.pmq24.rfid_guard.database.tags.TagRecord" />
+
 
   </session-factory>
 </hibernate-configuration>
