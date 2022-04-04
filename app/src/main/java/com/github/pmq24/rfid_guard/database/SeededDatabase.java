@@ -23,9 +23,11 @@ public class SeededDatabase extends Database {
 
         List<TagRecord> tagList = mapCsvStringToTagRecordList(fileContent);
 
-        tagList.forEach(System.out::println);
+        tagTable.insert(tagList);
 
     }
+
+
 
     private List<TagRecord> mapCsvStringToTagRecordList(String fileContent) {
         CsvMapper mapper = new CsvMapper();

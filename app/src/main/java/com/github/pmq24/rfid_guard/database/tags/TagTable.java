@@ -1,7 +1,6 @@
 package com.github.pmq24.rfid_guard.database.tags;
 
 import com.github.pmq24.rfid_guard.database.HibernateManager;
-import com.github.pmq24.rfid_guard.database.tag_reads.TagReadRecord;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -24,7 +23,16 @@ public class TagTable {
 
         transaction.commit();
         session.close();
+    }
 
+    public void insert(List<TagRecord> tagRecords) {
+        Session session = hibernateManager.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        tagRecords.forEach(session::save);
+
+        transaction.commit();
+        session.close();
     }
 
     public List<TagRecord> selectAll() {
