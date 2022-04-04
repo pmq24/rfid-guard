@@ -21,6 +21,9 @@ dependencies {
 
     implementation 'org.hibernate:hibernate-core:5.6.7.Final'
     implementation 'com.h2database:h2:2.1.210'
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.13.0'
 }
 
 application {
