@@ -19,8 +19,4 @@ public class TagReadRecord {
     @Column(nullable = false)
     private LocalDateTime time;
 
-    public interface PostInsertListener {
-        void onPostInsert(TagReadRecord tagReadRecord);
-    }
-
 }

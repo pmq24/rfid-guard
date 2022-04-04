@@ -9,6 +9,10 @@ import java.util.List;
 
 public class TagReadTable {
 
+    public interface InsertedListener {
+        void onInserted(TagReadRecord tagReadRecord);
+    }
+
     public TagReadTable(HibernateManager hibernateManager) {
         this.hibernateManager = hibernateManager;
     }
@@ -36,19 +40,15 @@ public class TagReadTable {
         return data;
     }
 
-    public void addPostInsertListener(TagReadRecord.PostInsertListener listener) {
-        postInsertListeners.add(listener);
+    public void setInsertedListener(InsertedListener listener) {
+        insertedListener = listener;
     }
 
-    public void removePostInsertListener(TagReadRecord.PostInsertListener listener) {
-        postInsertListeners.remove(listener);
-    }
-
-    private void notifyPostInsertListeners(TagReadRecord record) {
-        postInsertListeners.forEach(listener -> listener.onPostInsert(record));
+    private void notifyInsertedListener(TagReadRecord record) {
+        insertedListener.onInserted(record);
     }
 
     private final HibernateManager hibernateManager;
 
-    private List<TagReadRecord.PostInsertListener> postInsertListeners;
+    private InsertedListener insertedListener;
 }
