@@ -20,7 +20,7 @@ public class MockedTagReader extends TagReader {
                         Thread.sleep(THREE_SECS);
 
                         TagReadDto read = new TagReadDto(generateRandomRfid());
-                        notifyListeners(read);
+                        notifyListener(read);
 
                     } catch (InterruptedException e) {
                         isNotInterrupted = false;
