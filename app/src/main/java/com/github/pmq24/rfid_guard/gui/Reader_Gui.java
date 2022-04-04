@@ -30,7 +30,7 @@ public class Reader_Gui extends javax.swing.JFrame {
     public void insert(TagReadRecord record){
         EventQueue.invokeLater(() -> {
             DefaultTableModel model = (DefaultTableModel) tblTagReader.getModel();
-            model.insertRow(0, new Object[] {record.getRfid(), record.getTime()});
+            model.insertRow(0, new Object[] {record.getTagRfid(), record.getTime()});
         });
     }
     

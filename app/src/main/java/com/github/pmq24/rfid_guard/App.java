@@ -25,14 +25,14 @@ public class App {
 
         reader.addTagReadListener(tagReadDto -> {
             TagReadRecord record = new TagReadRecord();
-            record.setRfid(tagReadDto.getRfid());
+            record.setTagRfid(tagReadDto.getRfid());
             record.setTime(tagReadDto.getTime());
             db.getTagReadTable().insert(record);
         });
         
         reader.addTagReadListener(readTagDto -> {
             TagReadRecord record = new TagReadRecord();
-            record.setRfid(readTagDto.getRfid());
+            record.setTagRfid(readTagDto.getRfid());
             record.setTime(readTagDto.getTime());
             gui.insert(record);
         });

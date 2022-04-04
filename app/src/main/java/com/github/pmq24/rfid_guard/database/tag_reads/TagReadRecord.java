@@ -14,7 +14,7 @@ public class TagReadRecord {
     private Long id;
 
     @Column(nullable = false)
-    private String rfid;
+    private String tagRfid;
 
     @Column(nullable = false)
     private LocalDateTime time;
