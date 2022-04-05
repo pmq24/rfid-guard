@@ -1,7 +1,6 @@
-package com.github.pmq24.rfid_guard.database.tag_reads;
+package com.github.pmq24.rfid_guard.database;
 
 import com.github.pmq24.rfid_guard.data.TagRead;
-import com.github.pmq24.rfid_guard.database.HibernateManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
