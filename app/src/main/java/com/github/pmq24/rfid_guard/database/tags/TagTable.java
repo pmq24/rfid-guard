@@ -4,6 +4,7 @@ import com.github.pmq24.rfid_guard.database.HibernateManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
@@ -46,6 +47,15 @@ public class TagTable {
         session.close();
 
         return data;
+    }
+
+    public TagRecord selectByRfid(String rfid) {
+        Session session = hibernateManager.openSession();
+
+        Query query = session.createQuery("from TagRecord where rfid = :rfid");
+        query.setParameter("rfid", rfid);
+
+        return (TagRecord) query.getResultList().get(0);
     }
 
 }

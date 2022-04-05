@@ -25,6 +25,8 @@ public class TagReadTable {
 
         transaction.commit();
         session.close();
+
+        notifyInsertedListener(tagReadRecord);
     }
 
     public List<TagReadRecord> selectAll() {
