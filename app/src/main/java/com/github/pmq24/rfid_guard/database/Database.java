@@ -1,7 +1,5 @@
 package com.github.pmq24.rfid_guard.database;
 
-import com.github.pmq24.rfid_guard.database.tag_reads.TagReadTable;
-import com.github.pmq24.rfid_guard.database.tags.TagTable;
 import lombok.Getter;
 
 public class Database {

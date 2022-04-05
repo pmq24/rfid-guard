@@ -1,6 +1,6 @@
-package com.github.pmq24.rfid_guard.database.tags;
+package com.github.pmq24.rfid_guard.database;
 
-import com.github.pmq24.rfid_guard.database.HibernateManager;
+import com.github.pmq24.rfid_guard.data.Tag;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -16,46 +16,46 @@ public class TagTable {
         this.hibernateManager = hibernateManager;
     }
 
-    public void insert(TagRecord tagRecord) {
+    public void insert(Tag tag) {
         Session session = hibernateManager.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.save(tagRecord);
+        session.save(tag);
 
         transaction.commit();
         session.close();
     }
 
-    public void insert(List<TagRecord> tagRecords) {
+    public void insert(List<Tag> tags) {
         Session session = hibernateManager.openSession();
         Transaction transaction = session.beginTransaction();
 
-        tagRecords.forEach(session::save);
+        tags.forEach(session::save);
 
         transaction.commit();
         session.close();
     }
 
-    public List<TagRecord> selectAll() {
+    public List<Tag> selectAll() {
         Session session = hibernateManager.openSession();
 
-        CriteriaQuery<TagRecord> criteria = session.getCriteriaBuilder().createQuery(TagRecord.class);
+        CriteriaQuery<Tag> criteria = session.getCriteriaBuilder().createQuery(Tag.class);
 
-        criteria.from(TagRecord.class);
-        List<TagRecord> data = session.createQuery(criteria).getResultList();
+        criteria.from(Tag.class);
+        List<Tag> data = session.createQuery(criteria).getResultList();
 
         session.close();
 
         return data;
     }
 
-    public TagRecord selectByRfid(String rfid) {
+    public Tag selectByRfid(String rfid) {
         Session session = hibernateManager.openSession();
 
-        Query query = session.createQuery("from TagRecord where rfid = :rfid");
+        Query query = session.createQuery("from Tag where rfid = :rfid");
         query.setParameter("rfid", rfid);
 
-        return (TagRecord) query.getResultList().get(0);
+        return (Tag) query.getResultList().get(0);
     }
 
 }

@@ -1,6 +1,6 @@
-package com.github.pmq24.rfid_guard.database.tag_reads;
+package com.github.pmq24.rfid_guard.database;
 
-import com.github.pmq24.rfid_guard.database.HibernateManager;
+import com.github.pmq24.rfid_guard.data.TagRead;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -10,32 +10,32 @@ import java.util.List;
 public class TagReadTable {
 
     public interface InsertedListener {
-        void onInserted(TagReadRecord tagReadRecord);
+        void onInserted(TagRead tagRead);
     }
 
     public TagReadTable(HibernateManager hibernateManager) {
         this.hibernateManager = hibernateManager;
     }
 
-    public void insert(TagReadRecord tagReadRecord) {
+    public void insert(TagRead tagRead) {
         Session session = hibernateManager.openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.save(tagReadRecord);
+        session.save(tagRead);
 
         transaction.commit();
         session.close();
 
-        notifyInsertedListener(tagReadRecord);
+        notifyInsertedListener(tagRead);
     }
 
-    public List<TagReadRecord> selectAll() {
+    public List<TagRead> selectAll() {
         Session session = hibernateManager.openSession();
 
-        CriteriaQuery<TagReadRecord> criteria = session.getCriteriaBuilder().createQuery(TagReadRecord.class);
+        CriteriaQuery<TagRead> criteria = session.getCriteriaBuilder().createQuery(TagRead.class);
 
-        criteria.from(TagReadRecord.class);
-        List<TagReadRecord> data = session.createQuery(criteria).getResultList();
+        criteria.from(TagRead.class);
+        List<TagRead> data = session.createQuery(criteria).getResultList();
 
         session.close();
 
@@ -46,7 +46,7 @@ public class TagReadTable {
         insertedListener = listener;
     }
 
-    private void notifyInsertedListener(TagReadRecord record) {
+    private void notifyInsertedListener(TagRead record) {
         insertedListener.onInserted(record);
     }
 
