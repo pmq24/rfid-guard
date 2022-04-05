@@ -8,17 +8,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SoundAlarm implements Alarm {
 
     public SoundAlarm() {
         alarmFrame = new JAlarmFrame();
-        alarmFrame.showGui();
     }
 
     @Override
     public void alarm(TagReadRecord tagRead) {
-
+        alarmFrame.setRfidLabel(tagRead.getTagRfid());
+        alarmFrame.setTimeLabel(tagRead.getTime());
+        alarmFrame.showGui();
     }
 
     private final JAlarmFrame alarmFrame;
@@ -30,6 +33,14 @@ public class SoundAlarm implements Alarm {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             initializeComponents();
             initializeSoundClip();
+        }
+
+        public void setRfidLabel(String rfid) {
+            rfidLabel.setText(rfid);
+        }
+
+        public void setTimeLabel(LocalDateTime time) {
+            timeLabel.setText(time.format(DateTimeFormatter.ISO_DATE_TIME));
         }
 
         public void showGui() {
