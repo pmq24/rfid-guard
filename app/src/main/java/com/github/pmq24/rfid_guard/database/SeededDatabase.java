@@ -3,7 +3,7 @@ package com.github.pmq24.rfid_guard.database;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.github.pmq24.rfid_guard.database.tags.TagRecord;
+import com.github.pmq24.rfid_guard.data.Tag;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +21,7 @@ public class SeededDatabase extends Database {
 
         String fileContent = getSeedCsvFileContent();
 
-        List<TagRecord> tagList = mapCsvStringToTagRecordList(fileContent);
+        List<Tag> tagList = mapCsvStringToTagRecordList(fileContent);
 
         tagTable.insert(tagList);
 
@@ -29,16 +29,16 @@ public class SeededDatabase extends Database {
 
 
 
-    private List<TagRecord> mapCsvStringToTagRecordList(String fileContent) {
+    private List<Tag> mapCsvStringToTagRecordList(String fileContent) {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
 
-        List<TagRecord> tagList = new ArrayList<>();
+        List<Tag> tagList = new ArrayList<>();
 
-        MappingIterator<TagRecord> tagsIterator;
+        MappingIterator<Tag> tagsIterator;
 
         try {
-            tagsIterator = mapper.readerFor(TagRecord.class).with(schema).readValues(fileContent);
+            tagsIterator = mapper.readerFor(Tag.class).with(schema).readValues(fileContent);
             while (tagsIterator.hasNext()) {
                 tagList.add(tagsIterator.nextValue());
             }
