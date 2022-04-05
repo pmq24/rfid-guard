@@ -1,6 +1,6 @@
 package com.github.pmq24.rfid_guard.alarming;
 
-import com.github.pmq24.rfid_guard.database.tag_reads.TagReadRecord;
+import com.github.pmq24.rfid_guard.data.TagRead;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -18,7 +18,7 @@ public class SoundAlarm implements Alarm {
     }
 
     @Override
-    public void alarm(TagReadRecord tagRead) {
+    public void alarm(TagRead tagRead) {
         alarmFrame.setRfidLabel(tagRead.getTagRfid());
         alarmFrame.setTimeLabel(tagRead.getTime());
         alarmFrame.showGui();

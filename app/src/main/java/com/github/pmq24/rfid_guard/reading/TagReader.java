@@ -1,5 +1,7 @@
 package com.github.pmq24.rfid_guard.reading;
 
+import com.github.pmq24.rfid_guard.data.TagRead;
+
 public abstract class TagReader {
 
     public abstract void start();
@@ -10,8 +12,8 @@ public abstract class TagReader {
         tagReadListener = listener;
     }
 
-    protected void notifyListener(TagReadDto read) {
-        tagReadListener.onRead(read);
+    protected void notifyListener(TagRead tagRead) {
+        tagReadListener.onRead(tagRead);
     }
 
     protected TagReadListener tagReadListener;

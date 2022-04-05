@@ -1,8 +1,8 @@
 package com.github.pmq24.rfid_guard.alarming;
 
-import com.github.pmq24.rfid_guard.database.tag_reads.TagReadRecord;
+import com.github.pmq24.rfid_guard.data.TagRead;
 
 public interface Alarm {
 
-    void alarm(TagReadRecord tagRead);
+    void alarm(TagRead tagRead);
 }
