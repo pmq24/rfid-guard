@@ -6,8 +6,14 @@ import com.github.pmq24.rfid_guard.data.TagRead;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class MainWindow extends JFrame {
+
+    public interface CloseListener {
+        void onClose();
+    }
 
     public MainWindow() {
         initComponents();
@@ -63,6 +69,43 @@ public class MainWindow extends JFrame {
         );
 
         pack();
+
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                EventQueue.invokeLater(() -> setVisible(false));
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                closeListener.onClose();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
     }
 
     public void showGui() {
@@ -75,6 +118,10 @@ public class MainWindow extends JFrame {
         });
     }
 
+    public void setCloseListener(CloseListener listener) {
+        closeListener = listener;
+    }
+
     private JSplitPane rootSplitPane;
 
     private TagReadsPanel tagReadsPanel;
@@ -85,6 +132,6 @@ public class MainWindow extends JFrame {
     private JScrollPane readersListScrollPane;
     private JPanel readersPane;
 
-
+    private CloseListener closeListener;
 
 }

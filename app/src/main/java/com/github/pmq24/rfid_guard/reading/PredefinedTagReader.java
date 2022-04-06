@@ -1,5 +1,6 @@
 package com.github.pmq24.rfid_guard.reading;
 
+import com.github.pmq24.rfid_guard.data.Tag;
 import com.github.pmq24.rfid_guard.data.TagRead;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ public class PredefinedTagReader extends TagReader {
 
     private final Thread tagReadGeneratingThread;
 
-    public PredefinedTagReader(List<String> tagList, int intervalInSeconds) {
+    public PredefinedTagReader(List<Tag> tagList) {
         super();
 
         tagReadGeneratingThread = new Thread() {
@@ -22,10 +23,10 @@ public class PredefinedTagReader extends TagReader {
 
                 while (isNotInterrupted) {
                     try {
-                        Thread.sleep(intervalInSeconds * 1000L);
+                        Thread.sleep( 3000L);
 
                         TagRead tagRead = TagRead.builder()
-                                .tagRfid(getRandomRfidInList())
+                                .tagRfid(getRandomTagInList().getRfid())
                                 .time(LocalDateTime.now())
                                 .build();
 
@@ -38,7 +39,7 @@ public class PredefinedTagReader extends TagReader {
 
             }
 
-            private String getRandomRfidInList() {
+            private Tag getRandomTagInList() {
 
                 Random random = new Random();
 

@@ -1,14 +1,15 @@
 package com.github.pmq24.rfid_guard.data;
 
 import com.sun.istack.NotNull;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Tag {
     @Id String rfid;
