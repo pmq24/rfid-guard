@@ -28,10 +28,10 @@ public class App {
 
             final boolean isPurchased = database.getTagTable().selectByRfid(tagRead.getTagRfid()).getIsPurchased();
 
-            if (!isPurchased)
+            if (!tagRead.getTag().getIsPurchased())
                 alarm.alarm(tagRead);
 
-            mainWindow.addTagReadRow(tagRead, database.getTagTable().selectByRfid(tagRead.getTagRfid()).getIsPurchased());
+            mainWindow.addTagReadRow(tagRead, tagRead.getTag().getIsPurchased());
         });
 
         mainWindow.setCloseListener(() -> {

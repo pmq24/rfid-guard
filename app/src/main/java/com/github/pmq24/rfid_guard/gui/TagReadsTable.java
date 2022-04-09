@@ -16,8 +16,6 @@ public class TagReadsTable extends JTable {
         unpurchasedRows = new HashSet<>();
         model = new TagReadsTableModel();
         setModel(model);
-
-        setAutoscrolls(true);
     }
 
     public void addRow(TagRead tagRead, boolean isPurchased) {
@@ -25,6 +23,8 @@ public class TagReadsTable extends JTable {
 
         if (!isPurchased)
             unpurchasedRows.add(getRowCount() - 1);
+
+        scrollRectToVisible(getCellRect(getRowCount() - 1, 0, false));
     }
 
     @Override

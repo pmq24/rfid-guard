@@ -4,10 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,5 +18,9 @@ public class TagRead {
 
     @NotNull String tagRfid;
     @NotNull LocalDateTime time;
+
+    @ManyToOne
+    @JoinColumn(name="rfid")
+    Tag tag;
 
 }

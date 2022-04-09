@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class SoundAlarm implements Alarm {
 
     public SoundAlarm() {
-        alarmFrame = new JAlarmFrame();
+        alarmFrame = new AlarmFrame();
     }
 
     @Override
@@ -24,11 +24,11 @@ public class SoundAlarm implements Alarm {
         alarmFrame.showGui();
     }
 
-    private final JAlarmFrame alarmFrame;
+    private final AlarmFrame alarmFrame;
 
-    private static class JAlarmFrame extends JFrame {
+    private static class AlarmFrame extends JFrame {
 
-        public JAlarmFrame() {
+        public AlarmFrame() {
             super();
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             initializeComponents();
