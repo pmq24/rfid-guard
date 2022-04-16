@@ -2,6 +2,7 @@
 package com.github.pmq24.rfid_guard.gui;
 
 import com.github.pmq24.rfid_guard.data.TagRead;
+import com.impinj.octane.OctaneSdkException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +13,7 @@ import java.awt.event.WindowListener;
 public class MainWindow extends JFrame {
 
     public interface CloseListener {
-        void onClose();
+        void onClose() throws OctaneSdkException;
     }
 
     public MainWindow() {
@@ -83,7 +84,11 @@ public class MainWindow extends JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
-                closeListener.onClose();
+                try {
+                    closeListener.onClose();
+                } catch (OctaneSdkException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
 
             @Override
@@ -112,9 +117,9 @@ public class MainWindow extends JFrame {
         EventQueue.invokeLater(() -> setVisible(true));
     }
 
-    public void addTagReadRow(TagRead tagRead, boolean isPurchased) {
+    public void addTagReadRow(TagRead tagRead, String status) {
         EventQueue.invokeLater(() -> {
-            tagReadsPanel.addTableRow(tagRead, isPurchased);
+            tagReadsPanel.addTableRow(tagRead, status);
         });
     }
 

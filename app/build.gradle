@@ -28,7 +28,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.13.0'
 
-    compileOnly fileTree(dir: 'libs', includes: ['*.jar'])
+    implementation fileTree(dir: 'libs', includes: ['*.jar'])
 }
 
 application {

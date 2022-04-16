@@ -1,12 +1,13 @@
 package com.github.pmq24.rfid_guard.reading;
 
 import com.github.pmq24.rfid_guard.data.TagRead;
+import com.impinj.octane.OctaneSdkException;
 
 public abstract class TagReader {
 
-    public abstract void start();
+    public abstract void start() throws OctaneSdkException;
 
-    public abstract void stop();
+    public abstract void stop() throws OctaneSdkException;
 
     public void setTagReadListener(TagReadListener listener) {
         tagReadListener = listener;

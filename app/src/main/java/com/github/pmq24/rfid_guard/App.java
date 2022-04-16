@@ -6,24 +6,16 @@ import com.github.pmq24.rfid_guard.alarming.SoundAlarm;
 import com.github.pmq24.rfid_guard.database.Database;
 import com.github.pmq24.rfid_guard.database.SeededDatabase;
 import com.github.pmq24.rfid_guard.gui.MainWindow;
-import com.github.pmq24.rfid_guard.reading.ImpinjTagReader;
 import com.github.pmq24.rfid_guard.reading.PredefinedTagReader;
 import com.github.pmq24.rfid_guard.reading.TagReader;
 import com.impinj.octane.OctaneSdkException;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws OctaneSdkException {
 
         Database database = new SeededDatabase();
         TagReader tagReader = new PredefinedTagReader(database.getTagTable().selectAll());
-
-        try {
-            tagReader = new ImpinjTagReader("");
-        } catch (OctaneSdkException e) {
-            System.out.println("ERROR: CANNOT CONNECT TO DEVICE. EXITING...");
-            return;
-        }
 
         MainWindow mainWindow = new MainWindow();
         Alarm alarm = new SoundAlarm();
@@ -36,16 +28,17 @@ public class App {
         database.getTagReadTable().setInsertedListener(tagRead -> {
             System.out.println("DATABASE - inserted new tag read: " + tagRead);
 
-            if (tagRead.getTag() == null || !tagRead.getTag().getIsPurchased())
-                alarm.alarm(tagRead);
+            final String status = tagRead.getTag() == null ? "Unknown" : (tagRead.getTag().getIsPurchased() ? "Purchased" : "Not Purchased");
 
-            mainWindow.addTagReadRow(tagRead, tagRead.getTag().getIsPurchased());
+            if (tagRead.getTag() == null || !tagRead.getTag().getIsPurchased()) {
+                alarm.alarm(tagRead);
+            }
+
+            mainWindow.addTagReadRow(tagRead, status);
         });
 
-        TagReader finalTagReader = tagReader;
-
         mainWindow.setCloseListener(() -> {
-            finalTagReader.stop();
+            tagReader.stop();
             database.destroy();
         });
 

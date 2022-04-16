@@ -7,42 +7,27 @@ import java.time.LocalDateTime;
 
 public class ImpinjTagReader extends TagReader {
 
+    private final ImpinjReader reader;
+
     public ImpinjTagReader(String ipAddress) throws OctaneSdkException {
-        connectToDevice(ipAddress);
-    }
+        reader = new ImpinjReader();
 
-    @Override
-    public void start() {
-        try {
-            impinjReader.start();
-        } catch (OctaneSdkException e) {
-            e.printStackTrace();
-        }
-    }
+        System.out.println("Connecting");
+        reader.connect(ipAddress);
 
-    @Override
-    public void stop() {
-        try {
-            impinjReader.stop();
-        } catch (OctaneSdkException e) {
-            e.printStackTrace();
-        }
-    }
+        Settings settings = reader.queryDefaultSettings();
 
-    private void connectToDevice(String ipAddress) throws OctaneSdkException {
+        ReportConfig report = settings.getReport();
+        report.setIncludeAntennaPortNumber(true);
+        report.setMode(ReportMode.Individual);
 
-        impinjReader = new ImpinjReader();
-        impinjReader.connect(ipAddress);
-
-        impinjReader.connect(ipAddress);
-
-        Settings settings = impinjReader.queryDefaultSettings();
-
-        ReportConfig reportConfig = settings.getReport();
-        reportConfig.setIncludeAntennaPortNumber(true);
-        reportConfig.setMode(ReportMode.Individual);
+        // The reader can be set into various modes in which reader
+        // dynamics are optimized for specific regions and environments.
+        // The following mode, AutoSetDenseReader, monitors RF noise and interference and then automatically
+        // and continuously optimizes the reader's configuration
         settings.setReaderMode(ReaderMode.AutoSetDenseReader);
 
+        // set some special settings for antenna 1
         AntennaConfigGroup antennas = settings.getAntennas();
         antennas.disableAll();
         antennas.enableById(new short[]{1});
@@ -51,18 +36,27 @@ public class ImpinjTagReader extends TagReader {
         antennas.getAntenna((short) 1).setTxPowerinDbm(20.0);
         antennas.getAntenna((short) 1).setRxSensitivityinDbm(-70);
 
-        impinjReader.setTagReportListener((reader, report) -> {
-            report.getTags().forEach(tag -> {
-                TagRead tagRead = TagRead
-                        .builder()
-                        .tagRfid(tag.getEpc().toHexString())
-                        .time(LocalDateTime.now())
-                        .build();
-
-                notifyListener(tagRead);
+        reader.setTagReportListener((impinjReader, tagReport) -> {
+            tagReport.getTags().forEach(tag -> {
+                tagReadListener.onRead(
+                        TagRead.builder()
+                                .tagRfid(tag.getEpc().toHexString())
+                                .time(LocalDateTime.now())
+                                .build()
+                );
             });
         });
+
+        System.out.println("Applying Settings");
+        reader.applySettings(settings);
+    }
+    @Override
+    public void start() throws OctaneSdkException {
+        reader.start();
     }
 
-    private ImpinjReader impinjReader;
+    @Override
+    public void stop() throws OctaneSdkException {
+        reader.stop();
+    }
 }
