@@ -4,18 +4,22 @@ import com.github.pmq24.rfid_guard.data.TagRead;
 import com.impinj.octane.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ImpinjTagReader extends TagReader {
 
-    private final ImpinjReader reader;
+    private final ImpinjReader impinjReader;
+    private final Set<String> detectedTags;
 
     public ImpinjTagReader(String ipAddress) throws OctaneSdkException {
-        reader = new ImpinjReader();
+        impinjReader = new ImpinjReader();
+        detectedTags = new HashSet<>();
 
         System.out.println("Connecting");
-        reader.connect(ipAddress);
+        impinjReader.connect(ipAddress);
 
-        Settings settings = reader.queryDefaultSettings();
+        Settings settings = impinjReader.queryDefaultSettings();
 
         ReportConfig report = settings.getReport();
         report.setIncludeAntennaPortNumber(true);
@@ -36,27 +40,33 @@ public class ImpinjTagReader extends TagReader {
         antennas.getAntenna((short) 1).setTxPowerinDbm(20.0);
         antennas.getAntenna((short) 1).setRxSensitivityinDbm(-70);
 
-        reader.setTagReportListener((impinjReader, tagReport) -> {
-            tagReport.getTags().forEach(tag -> {
-                tagReadListener.onRead(
-                        TagRead.builder()
-                                .tagRfid(tag.getEpc().toHexString())
-                                .time(LocalDateTime.now())
-                                .build()
-                );
-            });
+        impinjReader.setTagReportListener((impinjReader, tagReport) -> {
+            for (Tag tag : tagReport.getTags()) {
+                final String hash = tag.getEpc().toHexString() + tag.getFirstSeenTime().ToString();
+                if (!detectedTags.contains(hash)) {
+
+                    detectedTags.add(hash);
+
+                    final TagRead tagRead = TagRead.builder()
+                            .tagRfid(tag.getEpc().toHexString())
+                            .time(LocalDateTime.now())
+                            .build();
+
+                    tagReadListener.onRead(tagRead);
+                }
+            }
         });
 
         System.out.println("Applying Settings");
-        reader.applySettings(settings);
+        impinjReader.applySettings(settings);
     }
     @Override
     public void start() throws OctaneSdkException {
-        reader.start();
+        impinjReader.start();
     }
 
     @Override
     public void stop() throws OctaneSdkException {
-        reader.stop();
+        impinjReader.stop();
     }
 }
