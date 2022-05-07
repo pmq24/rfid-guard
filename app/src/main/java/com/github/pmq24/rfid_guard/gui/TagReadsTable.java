@@ -18,8 +18,8 @@ public class TagReadsTable extends JTable {
         setModel(model);
     }
 
-    public void addRow(TagRead tagRead, String status) {
-        model.addRow(new Object[] {tagRead.getTagRfid(), tagRead.getTime().toString(), status});
+    public void addRow(TagRead tagRead, String status, String Notes) {
+        model.addRow(new Object[] {tagRead.getTagRfid(), tagRead.getTime().toString(), status, Notes});
 
         if (status.equals("Not Purchased") || status.equals("Unknown"))
             unpurchasedRows.add(getRowCount() - 1);
@@ -49,8 +49,8 @@ public class TagReadsTable extends JTable {
 
 class TagReadsTableModel extends DefaultTableModel {
 
-    public static final String[] headers = new String[]{"RFID", "TIME", "STATUS"};
-    public static final Class<?>[] columnClasses = new Class<?>[] {String.class, LocalDateTime.class, String.class};
+    public static final String[] headers = new String[]{"RFID", "TIME", "STATUS", "NOTES"};
+    public static final Class<?>[] columnClasses = new Class<?>[] {String.class, LocalDateTime.class, String.class, String.class};
 
     public TagReadsTableModel() {
         super(null, headers);

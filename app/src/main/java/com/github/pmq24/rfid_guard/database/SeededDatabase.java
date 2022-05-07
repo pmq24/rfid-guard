@@ -57,13 +57,15 @@ public class SeededDatabase extends Database {
 
         String fileContent;
 
+        String os = System.getProperty("os.name");
+        System.out.println(os);
+
         try {
-            fileContent = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+            fileContent = new String(Files.readAllBytes(Paths.get(os.equals("Windows 10") ? path.substring(1) : path)), StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.out.println("ERROR: File `seed.csv` not found");
             fileContent = "";
         }
-
         return fileContent;
     }
 

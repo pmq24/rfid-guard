@@ -7,4 +7,5 @@ import javax.persistence.metamodel.StaticMetamodel;
 public class Tag_ {
     public static volatile SingularAttribute<Tag, String> rfid;
     public static volatile SingularAttribute<Tag, Boolean> isPurchased;
+    public static volatile SingularAttribute<Tag, String> Notes;
 }

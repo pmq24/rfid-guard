@@ -21,8 +21,8 @@ public class TagReadsPanel extends JPanel {
         add(new JScrollPane(table));
     }
 
-    public void addTableRow(TagRead tagRead, String status) {
-        table.addRow(tagRead, status);
+    public void addTableRow(TagRead tagRead, String status, String Notes) {
+        table.addRow(tagRead, status, Notes);
     }
 
     private final TagReadsTable table;
