@@ -49,11 +49,13 @@ public class App {
 
             final String status = tagRead.getTag() == null ? "Unknown" : (tagRead.getTag().getIsPurchased() ? "Purchased" : "Not Purchased");
 
+            final String Notes = tagRead.getTag().getNotes();
+
             if (tagRead.getTag() == null || !tagRead.getTag().getIsPurchased()) {
                 alarm.alarm(tagRead);
             }
 
-            mainWindow.addTagReadRow(tagRead, status);
+            mainWindow.addTagReadRow(tagRead, status, Notes);
         });
 
         mainWindow.setCloseListener(() -> {

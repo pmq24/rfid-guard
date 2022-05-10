@@ -1,6 +1,7 @@
 package com.github.pmq24.rfid_guard.data;
 
 import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -14,4 +15,6 @@ import javax.persistence.Id;
 public class Tag {
     @Id String rfid;
     @NotNull Boolean isPurchased;
+    @Nullable String Notes;
+
 }

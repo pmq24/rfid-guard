@@ -117,9 +117,9 @@ public class MainWindow extends JFrame {
         EventQueue.invokeLater(() -> setVisible(true));
     }
 
-    public void addTagReadRow(TagRead tagRead, String status) {
+    public void addTagReadRow(TagRead tagRead, String status, String Notes) {
         EventQueue.invokeLater(() -> {
-            tagReadsPanel.addTableRow(tagRead, status);
+            tagReadsPanel.addTableRow(tagRead, status, Notes);
         });
     }
 
