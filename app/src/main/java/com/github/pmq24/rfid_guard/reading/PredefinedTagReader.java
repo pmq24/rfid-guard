@@ -23,7 +23,7 @@ public class PredefinedTagReader extends TagReader {
 
                 while (isNotInterrupted) {
                     try {
-                        Thread.sleep( 1000L);
+                        Thread.sleep( 2000);
 
                         TagRead tagRead = TagRead.builder()
                                 .tagRfid(getRandomTagInList().getRfid())
