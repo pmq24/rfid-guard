@@ -5,7 +5,9 @@ import com.github.pmq24.rfid_guard.alarming.Alarm;
 import com.github.pmq24.rfid_guard.alarming.SoundAlarm;
 import com.github.pmq24.rfid_guard.database.Database;
 import com.github.pmq24.rfid_guard.database.SeededDatabase;
+import com.github.pmq24.rfid_guard.gui.ConnectionWindow;
 import com.github.pmq24.rfid_guard.gui.MainWindow;
+import com.github.pmq24.rfid_guard.gui.ConnectionWindow;
 import com.github.pmq24.rfid_guard.reading.PredefinedTagReader;
 import com.github.pmq24.rfid_guard.reading.TagReader;
 import com.impinj.octane.OctaneSdkException;
@@ -22,27 +24,29 @@ public class App {
         Database database = new SeededDatabase();
         TagReader tagReader = new PredefinedTagReader(database.getTagTable().selectAll());
 
-        URI uri = URI.create("http://192.168.1.12:3010");
+//        URI uri = URI.create("http://192.168.1.12:3010");
+//
+//        Socket socket = IO.socket(uri);
+//
+//        socket.connect();
 
-        Socket socket = IO.socket(uri);
+//        Ack ack = args1 -> {
+//            for (Object o : args1) {
+//                System.out.println(o);
+//            }
+//        };
 
-        socket.connect();
-
-        Ack ack = args1 -> {
-            for (Object o : args1) {
-                System.out.println(o);
-            }
-        };
-
-        MainWindow mainWindow = new MainWindow();
+//        MainWindow mainWindow = new MainWindow();
+        ConnectionWindow connect = new ConnectionWindow();
         Alarm alarm = new SoundAlarm();
 
-        tagReader.setTagReadListener(tagRead -> {
-            // System.out.println("TAG READER - new tag read: " + tagRead);
-            // database.getTagReadTable().insert(tagRead);
 
-            socket.emit("detect", "{\"epc\":\"asd\"}", ack);
-        });
+//        tagReader.setTagReadListener(tagRead -> {
+//            // System.out.println("TAG READER - new tag read: " + tagRead);
+//            // database.getTagReadTable().insert(tagRead);
+//
+//            socket.emit("detect", "{\"epc\":\"asd\"}", ack);
+//        });
 
         database.getTagReadTable().setInsertedListener(tagRead -> {
             System.out.println("DATABASE - inserted new tag read: " + tagRead);
@@ -55,16 +59,15 @@ public class App {
                 alarm.alarm(tagRead);
             }
 
-            mainWindow.addTagReadRow(tagRead, status, Notes);
+//            mainWindow.addTagReadRow(tagRead, status, Notes);
         });
 
-        mainWindow.setCloseListener(() -> {
-            tagReader.stop();
-            database.destroy();
-        });
+//        mainWindow.setCloseListener(() -> {
+//            tagReader.stop();
+//            database.destroy();
+//        });
 
         tagReader.start();
-        mainWindow.showGui();
-
+        connect.showGui();
     }
 }
