@@ -6,7 +6,7 @@ import com.github.pmq24.rfid_guard.alarming.SoundAlarm;
 import com.github.pmq24.rfid_guard.database.Database;
 import com.github.pmq24.rfid_guard.database.SeededDatabase;
 import com.github.pmq24.rfid_guard.gui.MainWindow;
-import com.github.pmq24.rfid_guard.reading.PredefinedTagReader;
+import com.github.pmq24.rfid_guard.reading.MockedTagReader;
 import com.github.pmq24.rfid_guard.reading.TagReader;
 import com.impinj.octane.OctaneSdkException;
 
@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) throws OctaneSdkException {
 
         Database database = new SeededDatabase();
-        TagReader tagReader = new PredefinedTagReader(database.getTagTable().selectAll());
+        TagReader tagReader = new MockedTagReader();
 
         MainWindow mainWindow = new MainWindow();
         Alarm alarm = new SoundAlarm();

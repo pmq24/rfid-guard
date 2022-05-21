@@ -2,14 +2,10 @@ package com.github.pmq24.rfid_guard.database;
 
 import com.github.pmq24.rfid_guard.data.Tag;
 import com.github.pmq24.rfid_guard.data.TagRead;
-import com.github.pmq24.rfid_guard.data.Tag_;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 public class TagReadTable {
 
@@ -26,7 +22,7 @@ public class TagReadTable {
 
         Query query = session.createQuery("from Tag where rfid = :rfid");
         query.setParameter("rfid", tagRead.getTagRfid());
-        final Tag tag = (Tag) query.getResultList().get(0);
+        final Tag tag = query.getResultList().size() == 0 ? null : (Tag) query.getResultList().get(0);
 
         Transaction transaction = session.beginTransaction();
 

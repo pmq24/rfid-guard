@@ -45,11 +45,11 @@ public class MainWindow extends JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        readersListScrollPane.setViewportView(readersList);
+        // readersListScrollPane.setViewportView(readersList);
 
-        readersPane.add(readersListScrollPane);
+        // readersPane.add(readersListScrollPane);
 
-        addReaderButton.setText("Add reader");
+        // addReaderButton.setText("Add reader");
         addReaderButton.setAlignmentY(1.0F);
         readersPane.add(addReaderButton);
 

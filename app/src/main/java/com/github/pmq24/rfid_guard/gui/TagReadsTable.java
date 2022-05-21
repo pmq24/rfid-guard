@@ -14,6 +14,7 @@ public class TagReadsTable extends JTable {
 
     public TagReadsTable() {
         unpurchasedRows = new HashSet<>();
+        unknownRows = new HashSet<>();
         model = new TagReadsTableModel();
         setModel(model);
     }
@@ -21,8 +22,11 @@ public class TagReadsTable extends JTable {
     public void addRow(TagRead tagRead, String status) {
         model.addRow(new Object[] {tagRead.getTagRfid(), tagRead.getTime().toString(), status});
 
-        if (status.equals("Not Purchased") || status.equals("Unknown"))
+        if (status.equals("Not Purchased"))
             unpurchasedRows.add(getRowCount() - 1);
+
+        if (status.equals("Unknown"))
+            unknownRows.add(getRowCount() - 1);
 
         scrollRectToVisible(getCellRect(getRowCount() - 1, 0, false));
     }
@@ -32,9 +36,12 @@ public class TagReadsTable extends JTable {
         Component cell = super.prepareRenderer(renderer, row, column);
 
         final boolean thisCellBelongsToAnUnpurchasedRow = unpurchasedRows.contains(row);
+        final boolean thisCellBelongsToAnUnknownRow = unknownRows.contains(row);
 
         if (thisCellBelongsToAnUnpurchasedRow) {
             cell.setBackground(Color.RED);
+        } else if (thisCellBelongsToAnUnknownRow) {
+            cell.setBackground(Color.YELLOW);
         } else {
             cell.setBackground(Color.WHITE);
         }
@@ -44,6 +51,7 @@ public class TagReadsTable extends JTable {
 
     private final DefaultTableModel model;
     private final Set<Integer> unpurchasedRows;
+    private final Set<Integer> unknownRows;
 
 }
 
