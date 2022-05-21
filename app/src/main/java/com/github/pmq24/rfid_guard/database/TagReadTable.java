@@ -6,6 +6,7 @@ import com.github.pmq24.rfid_guard.data.Tag_;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -23,19 +24,9 @@ public class TagReadTable {
     public void insert(TagRead tagRead) {
         Session session = hibernateManager.openSession();
 
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Tag> criteriaQuery = criteriaBuilder.createQuery(Tag.class);
-
-        Root<Tag> rootTag = criteriaQuery
-                .from(Tag.class);
-
-        CriteriaQuery<Tag> query = criteriaQuery
-                .where(criteriaBuilder.equal(rootTag.get(Tag_.rfid), tagRead.getTagRfid()));
-
-        Tag tag = session
-                .createQuery(query)
-                .getResultList()
-                .get(0);
+        Query query = session.createQuery("from Tag where rfid = :rfid");
+        query.setParameter("rfid", tagRead.getTagRfid());
+        final Tag tag = (Tag) query.getResultList().get(0);
 
         Transaction transaction = session.beginTransaction();
 
